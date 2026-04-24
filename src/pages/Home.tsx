@@ -3,7 +3,6 @@ import { useState, type SubmitEvent } from "react";
 import { useNavigate } from "react-router";
 import { Title, Wrap } from "../components/Components.tsx";
 
-
 const Card = styled.form`
     background-color: #fff;
     padding: 40px;
@@ -15,8 +14,6 @@ const Card = styled.form`
     flex-direction: column;
     gap: 15px;
 `;
-
-
 
 const Input = styled.input`
     padding: 14px;
@@ -69,16 +66,15 @@ function Home() {
     const onSubmit = (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        const result = validate();  // 유효성 검사에 성공하면true, 실패하며 false
-        if(!result) return;
-
+        const result = validate(); // 유효성 검사에 성공하면true, 실패하며 false
+        if (!result) return;
 
         // 모든 검증을 통과하면, 그 입력한 값들을 백엔드에게 전송
         // 에러나오면 결코 아래로 나가면 안됨
 
         // 3. 백엔드에게 전송
-        const data = {username, password, email, name};
-        const queryString =  new URLSearchParams(data).toString();
+        const data = { username, password, email, name };
+        const queryString = new URLSearchParams(data).toString();
         navigate(`/result?${queryString}`);
     };
 
@@ -105,7 +101,7 @@ function Home() {
         // 4. 이메일이 입력 외었는가?
         //if (!email.trim()) setError({ email: "이메일은 필수 입력 항목입니다." });
         //else if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email))
-            //setError({ email: "이메일 형식이 올바르지 않습니다." });
+        //setError({ email: "이메일 형식이 올바르지 않습니다." });
         if (!email.trim()) newErrors.email = "이메일은 필수 입력 항목입니다.";
         else if (!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email))
             newErrors.email = "이메일 형식이 올바르지 않습니다.";
@@ -132,31 +128,44 @@ function Home() {
             <Card onSubmit={onSubmit}>
                 <Title>회원가입</Title>
                 <InputGroup>
-                    <Input placeholder={"아이디"} onChange={(event) => {
-                        setUsername(event.target.value);
-                    }}
-                        />
+                    <Input
+                        placeholder={"아이디"}
+                        onChange={event => {
+                            setUsername(event.target.value);
+                        }}
+                    />
                     {/* 아이디에 대해 검사하고 실패한 내용을 출력해줘야 함 */}
                     {error.username && <ErrorText>{error.username}</ErrorText>}
                 </InputGroup>
                 <InputGroup>
-                    <Input placeholder={"비밀번호"} type="password" onChange={(event) => {
-                        setPassword(event.target.value);
-                    }}/>
+                    <Input
+                        placeholder={"비밀번호"}
+                        type="password"
+                        onChange={event => {
+                            setPassword(event.target.value);
+                        }}
+                    />
 
                     {/* 비밀번호에 대해 검사하고 실패한 내용을 출력해줘야 함 */}
                     {error.password && <ErrorText>{error.password}</ErrorText>}
                 </InputGroup>
                 <InputGroup>
-                    <Input placeholder={"이름"} onChange={(event) => {
-                        setName(event.target.value);
-                    }}/>
+                    <Input
+                        placeholder={"이름"}
+                        onChange={event => {
+                            setName(event.target.value);
+                        }}
+                    />
                     {error.name && <ErrorText>{error.name}</ErrorText>}
                 </InputGroup>
                 <InputGroup>
-                    <Input placeholder={"이메일"} type="email" onChange={(event) => {
-                        setEmail(event.target.value);
-                    }}/>
+                    <Input
+                        placeholder={"이메일"}
+                        type="email"
+                        onChange={event => {
+                            setEmail(event.target.value);
+                        }}
+                    />
                     {error.email && <ErrorText>{error.email}</ErrorText>}
                 </InputGroup>
                 <Button type={"submit"}>회원가입</Button>
